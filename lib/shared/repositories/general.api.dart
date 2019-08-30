@@ -3,17 +3,16 @@ import 'package:countryapp/shared/models/country.dart';
 import 'package:dio/dio.dart';
 
 class GeneralApi {
-
   Dio dio;
 
-  GeneralApi(){
+  GeneralApi() {
     dio = Dio();
     dio.options.baseUrl = URL_BASE_API;
   }
 
   Future<Country> getCountry(String name) async {
     Response response = await dio.get("/paises?nome=$name");
-    return Country.fromJson(response.data);
+    print(response.data);
+    return Country.fromJson(response.data[0]);
   }
-
 }

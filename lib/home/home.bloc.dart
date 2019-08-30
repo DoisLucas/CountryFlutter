@@ -7,21 +7,18 @@ class HomeBloc implements BlocBase {
   final GeneralApi api;
 
   HomeBloc(this.api) {
-    _searchController.stream.listen(_search);
+    _searchController.listen(_search);
   }
 
-  final BehaviorSubject<Country> _countryCotroller =
-      BehaviorSubject<Country>.seeded(null);
-
+  final BehaviorSubject<Country> _countryCotroller = BehaviorSubject<Country>();
   Stream<Country> get countryChoose => _countryCotroller.stream;
 
-  final BehaviorSubject<String> _searchController =
-      BehaviorSubject<String>.seeded("brasil");
-
+  final BehaviorSubject<String> _searchController = BehaviorSubject<String>();
   Sink<String> get searchValue => _searchController.sink;
 
   void _search(String name) async {
     if (name != null) {
+      print("caiu");
       _countryCotroller.sink.add(await api.getCountry(name));
     }
   }
