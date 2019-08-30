@@ -28,7 +28,7 @@ dependencies:
   dio: ^2.1.16
 
 dev_dependencies:
-  flutter_tgitst:
+  flutter_test:
     sdk: flutter
 
 
