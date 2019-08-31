@@ -1,6 +1,6 @@
+import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:countryapp/home/home.bloc.dart';
 import 'package:countryapp/shared/models/country.dart';
-import 'package:countryapp/shared/repositories/general.api.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -9,14 +9,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  HomeBloc bloc;
-  final myController = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-    bloc = HomeBloc(GeneralApi());
-  }
+  final myController = TextEditingController();
+  final bloc = BlocProvider.getBloc<HomeBloc>();
 
   @override
   Widget build(BuildContext context) {
