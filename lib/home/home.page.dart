@@ -1,6 +1,6 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:countryapp/home/home.bloc.dart';
-import 'package:countryapp/shared/models/country.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,7 +15,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey,
+      backgroundColor: Color(0xff111731),
       body: Container(
           width: MediaQuery.of(context).size.width,
           child: Stack(
@@ -27,32 +27,67 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "Bem vindo",
+                        "Olá, viajante.",
                         style: TextStyle(
-                          fontSize: 35,
+                          fontSize: 30,
                           fontFamily: 'SF-Pro-Bold',
                           color: Colors.white,
                         ),
                       ),
-                      Text("Ao seu paískipédia!",
+                      Text("Desbrave o mundo!",
                           style: TextStyle(
-                            fontSize: 17,
-                            fontFamily: 'SF-Pro-Bold',
-                            color: Colors.white,
+                            fontSize: 15,
+                            fontFamily: 'SF-Pro-SemiBold',
+                            color: Color(0xff909fb4),
                           )),
+                      Container(
+                        margin: EdgeInsets.only(top: 10),
+                        height: 45,
+                        decoration: BoxDecoration(
+                            color: Color(0xff1d233b),
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
+                        child: Row(
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.only(left: 5, right: 5),
+                            ),
+                            Icon(Icons.search, color: Color(0xff909fb4)),
+                            Padding(
+                              padding: EdgeInsets.only(left: 5),
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width / 1.3,
+                                child: TextField(
+                                  textInputAction: TextInputAction.go,
+                                  onSubmitted: (value) {
+                                    bloc.searchValue.add(value);
+                                  },
+                                  cursorColor: Colors.white,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'SF-Pro-SemiBold',
+                                      fontSize: 16),
+                                  decoration:
+                                  InputDecoration(border: InputBorder.none),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),
               ),
 
               Positioned(
-                top: 500,
+                top: 190,
+                height: MediaQuery.of(context).size.height - 190,
                 child: Container(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height / 1.6,
+                  height: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                      color: Color(0xff1d233b),
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
                 ),
               )
 

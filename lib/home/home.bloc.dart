@@ -18,7 +18,6 @@ class HomeBloc implements BlocBase {
 
   void _search(String name) async {
     if (name != null) {
-      print("caiu");
       _countryCotroller.sink.add(await api.getCountry(name));
     }
   }
