@@ -18,6 +18,7 @@ class HomePage extends StatefulWidget {
 //TODO Animations
 
 class _HomePageState extends State<HomePage> {
+  final viewController = PageController();
   final myController = TextEditingController();
   final bloc = BlocProvider.getBloc<HomeBloc>();
 
@@ -26,6 +27,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Color(0xff111731),
       body: PageView(
+        controller: viewController,
         physics: BouncingScrollPhysics(),
         children: <Widget>[
           Container(
@@ -38,20 +40,48 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(
-                          "Olá, viajante.",
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontFamily: 'SF-Pro-Bold',
-                            color: Colors.white,
-                          ),
+                        Row(
+                          children: <Widget>[
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  "Olá, viajante.",
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                    fontFamily: 'SF-Pro-Bold',
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Text("Desbrave o mundo!",
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontFamily: 'SF-Pro-SemiBold',
+                                      color: Color(0xff909fb4),
+                                    )),
+                              ],
+                            ),
+                            Expanded(
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    viewController.animateToPage(1,
+                                        duration: Duration(milliseconds: 500),
+                                        curve: Curves.ease);
+                                  },
+                                  child: Icon(
+                                    Icons.favorite,
+                                    color: Colors.white,
+                                    size: 32,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
                         ),
-                        Text("Desbrave o mundo!",
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontFamily: 'SF-Pro-SemiBold',
-                              color: Color(0xff909fb4),
-                            )),
                         Container(
                           margin: EdgeInsets.only(top: 10),
                           height: 45,
@@ -177,30 +207,53 @@ class _HomePageState extends State<HomePage> {
                                             color: Colors.white.withAlpha(20),
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10))),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                        child: Row(
                                           children: <Widget>[
-                                            Text(
-                                              country.nome,
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                                fontFamily: 'SF-Pro-Bold',
-                                                color: Colors.white,
-                                              ),
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                Text(
+                                                  country.nome,
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontFamily: 'SF-Pro-Bold',
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  country.capital,
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    fontFamily: 'SF-Pro-Bold',
+                                                    color: Color(0xff909fb4),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                            Text(
-                                              country.capital,
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                fontFamily: 'SF-Pro-Bold',
-                                                color: Color(0xff909fb4),
+
+
+
+                                            Expanded(
+                                              child: Align(
+                                                alignment: Alignment.centerRight,
+                                                child: Padding(
+                                                  padding: EdgeInsets.only(right: 20),
+                                                  child: GestureDetector(
+                                                    child: Icon(
+                                                      Icons.favorite_border,
+                                                      color: Colors.white,
+                                                      size: 32,
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
-                                            ),
+                                            )
+
                                           ],
                                         ),
                                       ),

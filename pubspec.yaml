@@ -28,6 +28,7 @@ dependencies:
   dio: ^2.1.16
   flutter_spinkit: "^4.0.0"
   transparent_image: ^1.0.0
+  shared_preferences: ^0.5.3+4
 
 
 dev_dependencies:
