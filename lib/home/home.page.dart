@@ -10,6 +10,13 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+//TODO Handle erros: no flag and wrong search
+//TODO Change themeData colors
+//TODO Favorites countries
+//TODO Splash intro
+//TODO Info app with important links
+//TODO Animations
+
 class _HomePageState extends State<HomePage> {
   final myController = TextEditingController();
   final bloc = BlocProvider.getBloc<HomeBloc>();
@@ -123,6 +130,7 @@ class _HomePageState extends State<HomePage> {
                       );
                     }
                     Country country = snapshot.data;
+
                     return SingleChildScrollView(
                       physics: BouncingScrollPhysics(),
                       child: Container(
@@ -198,149 +206,54 @@ class _HomePageState extends State<HomePage> {
                                   EdgeInsets.only(top: 15, left: 20, right: 20),
                               child: Container(
                                 width: MediaQuery.of(context).size.width,
-
                                 decoration: BoxDecoration(
                                   color: Colors.white.withAlpha(20),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10)),
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsets.all(20),
+                                  padding: EdgeInsets.only(
+                                      top: 15, bottom: 20, left: 20, right: 20),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
-                                      Text(
-                                        "Área: ${country.area} km².",
-                                        textAlign: TextAlign.start,
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          fontFamily: 'SF-Pro-Bold',
-                                          color: Color(0xff909fb4),
-                                        ),
+                                      infoTile("Área: ", country.area),
+                                      infoTile(
+                                          "População: ", country.populacao),
+                                      infoTile("Governo: ", country.governo),
+                                      infoTile("Lema: ", country.lema),
+                                      infoTile("Hino: ", country.hino),
+                                      infoTile("Linguas: ", country.linguas),
+                                      infoTile("Moeda: ", country.moeda),
+                                      infoTile("Paises Vizinhos: ",
+                                          country.vizinhos),
+                                      infoTile("Fronteiras Matitimas: ",
+                                          country.fMaritimas),
+                                      SizedBox(
+                                        height: 20,
                                       ),
-                                      Padding(
-                                        padding: EdgeInsets.only(top: 5),
+                                      Center(
+                                          child: Container(
                                         child: Text(
-                                          "Populaçao: ${country.populacao}.",
-                                          textAlign: TextAlign.start,
+                                          "Powered by SimplePiece",
                                           style: TextStyle(
-                                            fontSize: 15,
+                                            fontSize: 12,
                                             fontFamily: 'SF-Pro-Bold',
-                                            color: Color(0xff909fb4),
+                                            color:
+                                                Color(0xff909fb4).withAlpha(70),
                                           ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(top: 5),
-                                        child: Text(
-                                          "Governo: ${country.governo}.",
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            fontFamily: 'SF-Pro-Bold',
-                                            color: Color(0xff909fb4),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(top: 5),
-                                        child: Text(
-                                          "Lema: ${country.lema}.",
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            fontFamily: 'SF-Pro-Bold',
-                                            color: Color(0xff909fb4),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(top: 5),
-                                        child: Text(
-                                          "Hino: ${country.hino}.",
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            fontFamily: 'SF-Pro-Bold',
-                                            color: Color(0xff909fb4),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(top: 5),
-                                        child: Text(
-                                          "Linguas: ${country.linguas}.",
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            fontFamily: 'SF-Pro-Bold',
-                                            color: Color(0xff909fb4),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(top: 5),
-                                        child: Text(
-                                          "Moeda: ${country.moeda}.",
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            fontFamily: 'SF-Pro-Bold',
-                                            color: Color(0xff909fb4),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(top: 5),
-                                        child: Text(
-                                          "Paises Vizinhos: ${country.vizinhos}.",
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            fontFamily: 'SF-Pro-Bold',
-                                            color: Color(0xff909fb4),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(top: 5),
-                                        child: Text(
-                                          "Fronteiras Maritimas: ${country.fMaritimas}.",
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            fontFamily: 'SF-Pro-Bold',
-                                            color: Color(0xff909fb4),
-                                          ),
-                                        ),
+                                      )),
+                                      SizedBox(
+                                        height: 20,
                                       ),
                                     ],
                                   ),
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: 20,
-                            ),
-
-
-                            Center(
-                              child: Container(
-                                child:
-                                Text(
-                                  "Powered by SimplePiece",
-                                  style: TextStyle(
-                                  fontSize: 12,
-                                  fontFamily: 'SF-Pro-Bold',
-                                  color: Color(0xff909fb4).withAlpha(70),
-                                ),
-                                ),
-                              )
-                            ),
-
-
                           ],
                         ),
                       ),
@@ -356,7 +269,21 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-//return Center(
-//child:  FlareActor('assets/load.flr',
-//animation: 'Untitled'),
-//);
+Widget infoTile(title, value) {
+  return Padding(
+    padding: EdgeInsets.only(top: 5),
+    child: RichText(
+      text: TextSpan(
+        style: TextStyle(
+          fontSize: 15,
+          fontFamily: 'SF-Pro-Bold',
+          color: Color(0xff909fb4),
+        ),
+        children: <TextSpan>[
+          TextSpan(text: title, style: TextStyle(color: Colors.white)),
+          TextSpan(text: "$value", style: TextStyle(fontSize: 15))
+        ],
+      ),
+    ),
+  );
+}
