@@ -1,6 +1,8 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:countryapp/home/home.bloc.dart';
+import 'package:countryapp/shared/models/country.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:transparent_image/transparent_image.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,109 +19,344 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Color(0xff111731),
       body: Container(
-          width: MediaQuery.of(context).size.width,
-          child: Stack(
-            children: <Widget>[
-              SafeArea(
-                child: Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "Olá, viajante.",
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontFamily: 'SF-Pro-Bold',
-                          color: Colors.white,
-                        ),
+        width: MediaQuery.of(context).size.width,
+        child: Stack(
+          children: <Widget>[
+            SafeArea(
+              child: Padding(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "Olá, viajante.",
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontFamily: 'SF-Pro-Bold',
+                        color: Colors.white,
                       ),
-                      Text("Desbrave o mundo!",
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontFamily: 'SF-Pro-SemiBold',
-                            color: Color(0xff909fb4),
-                          )),
-                      Container(
-                        margin: EdgeInsets.only(top: 10),
-                        height: 45,
-                        decoration: BoxDecoration(
-                            color: Color(0xff1d233b),
-                            borderRadius: BorderRadius.all(Radius.circular(5))),
-                        child: Row(
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(left: 5, right: 5),
-                            ),
-                            Icon(Icons.search, color: Color(0xff909fb4)),
-                            Padding(
-                              padding: EdgeInsets.only(left: 5),
-                              child: SizedBox(
-                                width: MediaQuery.of(context).size.width / 1.3,
-                                child: TextField(
-                                  textInputAction: TextInputAction.go,
-                                  onSubmitted: (value) {
-                                    bloc.searchValue.add(value);
-                                  },
-                                  cursorColor: Colors.white,
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: 'SF-Pro-SemiBold',
-                                      fontSize: 16),
-                                  decoration:
-                                  InputDecoration(border: InputBorder.none),
-                                ),
+                    ),
+                    Text("Desbrave o mundo!",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontFamily: 'SF-Pro-SemiBold',
+                          color: Color(0xff909fb4),
+                        )),
+                    Container(
+                      margin: EdgeInsets.only(top: 10),
+                      height: 45,
+                      decoration: BoxDecoration(
+                          color: Color(0xff1d233b),
+                          borderRadius: BorderRadius.all(Radius.circular(5))),
+                      child: Row(
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(left: 5, right: 5),
+                          ),
+                          Icon(Icons.search, color: Color(0xff909fb4)),
+                          Padding(
+                            padding: EdgeInsets.only(left: 5),
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width / 1.3,
+                              child: TextField(
+                                textInputAction: TextInputAction.go,
+                                onSubmitted: (value) {
+                                  bloc.searchValue.add(value);
+                                },
+                                cursorColor: Colors.white,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'SF-Pro-SemiBold',
+                                    fontSize: 16),
+                                decoration:
+                                    InputDecoration(border: InputBorder.none),
                               ),
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
                 ),
               ),
+            ),
+            Positioned(
+              top: 170,
+              height: MediaQuery.of(context).size.height - 170,
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                decoration: BoxDecoration(
+                    color: Color(0xff1d233b),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20))),
+                child: StreamBuilder<Country>(
+                  stream: bloc.countryChoose,
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.search,
+                                size: 130,
+                                color: Color(0xff909fb4).withAlpha(80),
+                              ),
+                              Container(
+                                width: 200,
+                                child: Text(
+                                  "Procure por um pais na barra de pesquisa.",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontFamily: 'SF-Pro-Bold',
+                                    color: Color(0xff909fb4).withAlpha(80),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }
+                    Country country = snapshot.data;
+                    return SingleChildScrollView(
+                      physics: BouncingScrollPhysics(),
+                      child: Container(
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              padding:
+                                  EdgeInsets.only(top: 25, left: 20, right: 20),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Container(
+                                      height: 70,
+                                      width: 110,
+                                      decoration: BoxDecoration(
+                                          color: Colors.white.withAlpha(20),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10))),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10)),
+                                        child: FadeInImage.memoryNetwork(
+                                          placeholder: kTransparentImage,
+                                          image: country.bandeiraUrl,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      )),
+                                  SizedBox(
+                                    width: 15,
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.only(left: 15),
+                                    height: 70,
+                                    width:
+                                        MediaQuery.of(context).size.width - 165,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white.withAlpha(20),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10))),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          country.nome,
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontFamily: 'SF-Pro-Bold',
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        Text(
+                                          country.capital,
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontFamily: 'SF-Pro-Bold',
+                                            color: Color(0xff909fb4),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsets.only(top: 15, left: 20, right: 20),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
 
-              Positioned(
-                top: 190,
-                height: MediaQuery.of(context).size.height - 190,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  decoration: BoxDecoration(
-                      color: Color(0xff1d233b),
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withAlpha(20),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(20),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        "Área: ${country.area} km².",
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontFamily: 'SF-Pro-Bold',
+                                          color: Color(0xff909fb4),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(top: 5),
+                                        child: Text(
+                                          "Populaçao: ${country.populacao}.",
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            fontFamily: 'SF-Pro-Bold',
+                                            color: Color(0xff909fb4),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(top: 5),
+                                        child: Text(
+                                          "Governo: ${country.governo}.",
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            fontFamily: 'SF-Pro-Bold',
+                                            color: Color(0xff909fb4),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(top: 5),
+                                        child: Text(
+                                          "Lema: ${country.lema}.",
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            fontFamily: 'SF-Pro-Bold',
+                                            color: Color(0xff909fb4),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(top: 5),
+                                        child: Text(
+                                          "Hino: ${country.hino}.",
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            fontFamily: 'SF-Pro-Bold',
+                                            color: Color(0xff909fb4),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(top: 5),
+                                        child: Text(
+                                          "Linguas: ${country.linguas}.",
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            fontFamily: 'SF-Pro-Bold',
+                                            color: Color(0xff909fb4),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(top: 5),
+                                        child: Text(
+                                          "Moeda: ${country.moeda}.",
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            fontFamily: 'SF-Pro-Bold',
+                                            color: Color(0xff909fb4),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(top: 5),
+                                        child: Text(
+                                          "Paises Vizinhos: ${country.vizinhos}.",
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            fontFamily: 'SF-Pro-Bold',
+                                            color: Color(0xff909fb4),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(top: 5),
+                                        child: Text(
+                                          "Fronteiras Maritimas: ${country.fMaritimas}.",
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            fontFamily: 'SF-Pro-Bold',
+                                            color: Color(0xff909fb4),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+
+
+                            Center(
+                              child: Container(
+                                child:
+                                Text(
+                                  "Powered by SimplePiece",
+                                  style: TextStyle(
+                                  fontSize: 12,
+                                  fontFamily: 'SF-Pro-Bold',
+                                  color: Color(0xff909fb4).withAlpha(70),
+                                ),
+                                ),
+                              )
+                            ),
+
+
+                          ],
+                        ),
+                      ),
+                    );
+                  },
                 ),
-              )
-
-//              TextField(
-//                controller: myController,
-//              ),
-//              RaisedButton(
-//                onPressed: () {
-//                  bloc.searchValue.add(myController.text);
-//                },
-//                color: Colors.pink,
-//              ),
-//              StreamBuilder<Country>(
-//                stream: bloc.countryChoose,
-//                builder: (context, snapshot) {
-//                  if (!snapshot.hasData) {
-//                    return Center(
-//                      child: CircularProgressIndicator(),
-//                    );
-//                  }
-//                  Country country = snapshot.data;
-//                  return Column(
-//                    children: <Widget>[
-//                      Text(country.nome),
-//                      Text(country.capital),
-//                      Image.network(country.bandeiraUrl),
-//                    ],
-//                  );
-//                },
-//              ),
-            ],
-          )),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
+
+//return Center(
+//child:  FlareActor('assets/load.flr',
+//animation: 'Untitled'),
+//);
