@@ -26,6 +26,7 @@ class FavoriteBloc implements BlocBase {
     if(_favorites.containsKey(country.nome)) _favorites.remove(country.nome);
     else _favorites[country.nome] = country;
     _favController.sink.add(_favorites);
+    print(_favorites);
     _saveFav();
   }
 

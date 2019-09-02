@@ -29,7 +29,7 @@ dependencies:
   flutter_spinkit: "^4.0.0"
   transparent_image: ^1.0.0
   shared_preferences: ^0.5.3+4
-
+  flare_flutter: any
 
 dev_dependencies:
   flutter_test:

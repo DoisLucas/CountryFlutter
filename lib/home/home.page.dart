@@ -5,6 +5,7 @@ import 'package:countryapp/shared/models/country.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flare_flutter/flare_actor.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -246,7 +247,9 @@ class _HomePageState extends State<HomePage> {
                                                       right: 20),
                                                   child: GestureDetector(
                                                     onTap: () {
-                                                      favoriteBloc.toggleFavorite(country);
+                                                      favoriteBloc
+                                                          .toggleFavorite(
+                                                              country);
                                                     },
                                                     child: StreamBuilder<
                                                         Map<String, Country>>(
@@ -254,12 +257,22 @@ class _HomePageState extends State<HomePage> {
                                                           favoriteBloc.outFav,
                                                       builder:
                                                           (context, snapshot) {
-                                                        return Icon(
-                                                          snapshot.data.containsKey(country.nome) ? Icons.favorite :
-                                                          Icons.favorite_border,
-                                                          color: Colors.white,
-                                                          size: 32,
-                                                        );
+                                                        if (snapshot.hasData) {
+                                                          return Container(
+                                                            width: 40,
+                                                            height: 40,
+                                                            child: snapshot.data
+                                                                    .containsKey(
+                                                                        country
+                                                                            .nome)
+                                                                ? like_animation(
+                                                                    "like")
+                                                                : like_animation(
+                                                                    "deslike"),
+                                                          );
+                                                        } else {
+                                                          return Container();
+                                                        }
                                                       },
                                                     ),
                                                   ),
@@ -294,7 +307,8 @@ class _HomePageState extends State<HomePage> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: <Widget>[
-                                          infoTile("Área: ", country.area),
+                                          infoTile(
+                                              "Área: ", "${country.area} km²"),
                                           infoTile(
                                               "População: ", country.populacao),
                                           infoTile(
@@ -390,4 +404,8 @@ Widget infoTile(title, value) {
       ),
     ),
   );
+}
+
+Widget like_animation(animation) {
+  return FlareActor('assets/like.flr', animation: animation);
 }
