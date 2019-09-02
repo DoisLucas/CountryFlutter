@@ -3,10 +3,10 @@ import 'package:countryapp/shared/models/country.dart';
 import 'package:countryapp/shared/repositories/general.api.dart';
 import 'package:rxdart/rxdart.dart';
 
-class HomeBloc implements BlocBase {
+class CountryBloc implements BlocBase {
   final GeneralApi api;
 
-  HomeBloc(this.api) {
+  CountryBloc(this.api) {
     _searchController.listen(_search);
   }
 

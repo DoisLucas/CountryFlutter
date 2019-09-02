@@ -1,5 +1,6 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
-import 'package:countryapp/home/home.bloc.dart';
+import 'package:countryapp/blocs/country.bloc.dart';
+import 'package:countryapp/blocs/fav.bloc.dart';
 import 'package:countryapp/shared/models/country.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -20,7 +21,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final viewController = PageController();
   final myController = TextEditingController();
-  final bloc = BlocProvider.getBloc<HomeBloc>();
+  final countryBloc = BlocProvider.getBloc<CountryBloc>();
+  final favoriteBloc = BlocProvider.getBloc<FavoriteBloc>();
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                                   child: TextField(
                                     textInputAction: TextInputAction.go,
                                     onSubmitted: (value) {
-                                      bloc.searchValue.add(value);
+                                      countryBloc.searchValue.add(value);
                                     },
                                     cursorColor: Colors.white,
                                     style: TextStyle(
@@ -134,7 +136,7 @@ class _HomePageState extends State<HomePage> {
                             topLeft: Radius.circular(20),
                             topRight: Radius.circular(20))),
                     child: StreamBuilder<Country>(
-                      stream: bloc.countryChoose,
+                      stream: countryBloc.countryChoose,
                       builder: (context, snapshot) {
                         if (!snapshot.hasData) {
                           return Center(
@@ -235,25 +237,35 @@ class _HomePageState extends State<HomePage> {
                                                 ),
                                               ],
                                             ),
-
-
-
                                             Expanded(
                                               child: Align(
-                                                alignment: Alignment.centerRight,
+                                                alignment:
+                                                    Alignment.centerRight,
                                                 child: Padding(
-                                                  padding: EdgeInsets.only(right: 20),
+                                                  padding: EdgeInsets.only(
+                                                      right: 20),
                                                   child: GestureDetector(
-                                                    child: Icon(
-                                                      Icons.favorite_border,
-                                                      color: Colors.white,
-                                                      size: 32,
+                                                    onTap: () {
+                                                      favoriteBloc.toggleFavorite(country);
+                                                    },
+                                                    child: StreamBuilder<
+                                                        Map<String, Country>>(
+                                                      stream:
+                                                          favoriteBloc.outFav,
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        return Icon(
+                                                          snapshot.data.containsKey(country.nome) ? Icons.favorite :
+                                                          Icons.favorite_border,
+                                                          color: Colors.white,
+                                                          size: 32,
+                                                        );
+                                                      },
                                                     ),
                                                   ),
                                                 ),
                                               ),
                                             )
-
                                           ],
                                         ),
                                       ),
