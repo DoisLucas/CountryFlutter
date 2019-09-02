@@ -10,7 +10,7 @@ class FavoriteBloc implements BlocBase {
 
   final _favController = BehaviorSubject<Map<String, Country>>.seeded({});
   Stream<Map<String, Country>> get outFav => _favController.stream;
-
+  
   FavoriteBloc() {
     SharedPreferences.getInstance().then((prefs) {
       if (prefs.getKeys().contains("favorites")) {

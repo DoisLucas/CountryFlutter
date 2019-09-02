@@ -287,7 +287,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(
-                                      top: 15, left: 20, right: 20),
+                                      top: 15, left: 20, right: 20, bottom: 25),
                                   child: Container(
                                     width: MediaQuery.of(context).size.width,
                                     decoration: BoxDecoration(
@@ -338,7 +338,7 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                           )),
                                           SizedBox(
-                                            height: 20,
+                                            height: 5,
                                           ),
                                         ],
                                       ),
@@ -358,33 +358,65 @@ class _HomePageState extends State<HomePage> {
           ),
           Container(
             width: MediaQuery.of(context).size.width,
-            child: Stack(
-              children: <Widget>[
-                SafeArea(
-                  child: Padding(
-                    padding: EdgeInsets.all(20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          "Favoritos",
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontFamily: 'SF-Pro-Bold',
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
+            child: SafeArea(
+              child: Padding(
+                padding: EdgeInsets.only(top: 20, right: 20, left: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "Favoritos",
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontFamily: 'SF-Pro-Bold',
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    StreamBuilder<Map<String, Country>>(
+                      initialData: {},
+                        stream: favoriteBloc.outFav,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return  Expanded(
+                              child: ListView(
+                                  physics: BouncingScrollPhysics(),
+                                  children: snapshot.data.values.map((k) {
+                                    return FavoriteTile(context, k);
+                                  }).toList(),
+                              ),
+                            );
+                          } else {
+                            return Container();
+                          }
+                        }),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ],
       ),
     );
   }
+}
+
+Widget FavoriteTile(context, Country country) {
+   return Padding(
+     padding: const EdgeInsets.only(top: 5, bottom: 5),
+     child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: 70,
+        decoration: BoxDecoration(
+            color: Color(0xff1d233b),
+            borderRadius: BorderRadius.all(Radius.circular(8))),
+        child: Row(
+          children: <Widget>[Text(country.nome)],
+        ),
+  ),
+   );
 }
 
 Widget infoTile(title, value) {
