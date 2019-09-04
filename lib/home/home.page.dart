@@ -376,17 +376,39 @@ class _HomePageState extends State<HomePage> {
                       height: 15,
                     ),
                     StreamBuilder<Map<String, Country>>(
-                      initialData: {},
+                        initialData: {},
                         stream: favoriteBloc.outFav,
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
-                            return  Expanded(
-                              child: ListView(
+                            return Expanded(
+                              child: ListView.builder(
+                                  itemCount: snapshot.data.length,
                                   physics: BouncingScrollPhysics(),
-                                  children: snapshot.data.values.map((k) {
-                                    return FavoriteTile(context, k);
-                                  }).toList(),
-                              ),
+                                  itemBuilder: (context, index) {
+                                    Country c =
+                                        snapshot.data.values.toList()[index];
+
+                                    return Dismissible(
+                                      direction: DismissDirection.startToEnd,
+                                      key: Key(c.nome),
+                                      onDismissed: (direction) {
+                                        Scaffold.of(context).showSnackBar(
+                                            SnackBar(
+                                                content: Text(
+                                                    "${c.nome} dismissed")));
+                                      },
+                                      background: Container(
+                                        padding: EdgeInsets.only(right: 5),
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        decoration: BoxDecoration(
+                                            color: Colors.white.withAlpha(20),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(8))),
+                                      ),
+                                      child: FavoriteTile(context, c),
+                                    );
+                                  }),
                             );
                           } else {
                             return Container();
@@ -404,19 +426,16 @@ class _HomePageState extends State<HomePage> {
 }
 
 Widget FavoriteTile(context, Country country) {
-   return Padding(
-     padding: const EdgeInsets.only(top: 5, bottom: 5),
-     child: Container(
-        width: MediaQuery.of(context).size.width,
-        height: 70,
-        decoration: BoxDecoration(
-            color: Color(0xff1d233b),
-            borderRadius: BorderRadius.all(Radius.circular(8))),
-        child: Row(
-          children: <Widget>[Text(country.nome)],
-        ),
-  ),
-   );
+  return Container(
+    width: MediaQuery.of(context).size.width,
+    height: 70,
+    decoration: BoxDecoration(
+        color: Color(0xff1d233b),
+        borderRadius: BorderRadius.all(Radius.circular(8))),
+    child: Row(
+      children: <Widget>[Text(country.nome)],
+    ),
+  );
 }
 
 Widget infoTile(title, value) {
