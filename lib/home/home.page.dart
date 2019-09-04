@@ -394,10 +394,20 @@ class _HomePageState extends State<HomePage> {
                                       onDismissed: (direction) {
                                         Scaffold.of(context).showSnackBar(
                                             SnackBar(
+                                                duration: Duration(seconds: 2),
+                                                action: SnackBarAction(
+                                                  label: 'Desfazer',
+                                                  disabledTextColor:
+                                                      Colors.white,
+                                                  textColor: Colors.white,
+                                                  onPressed: () {},
+                                                ),
                                                 content: Text(
-                                                    "${c.nome} dismissed")));
+                                                    "${c.nome} foi removido dos favoritos")));
                                       },
                                       background: Container(
+                                        margin:
+                                            EdgeInsets.only(top: 5, bottom: 5),
                                         padding: EdgeInsets.only(right: 5),
                                         width:
                                             MediaQuery.of(context).size.width,
@@ -405,6 +415,27 @@ class _HomePageState extends State<HomePage> {
                                             color: Colors.white.withAlpha(20),
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(8))),
+                                        child: Row(
+                                          children: <Widget>[
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Icon(
+                                              Icons.delete_forever,
+                                              size: 20,
+                                              color: Colors.white,
+                                            ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text("Remover",
+                                                style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontFamily: 'SF-Pro-Bold',
+                                                  color: Colors.white,
+                                                )),
+                                          ],
+                                        ),
                                       ),
                                       child: FavoriteTile(context, c),
                                     );
@@ -427,13 +458,58 @@ class _HomePageState extends State<HomePage> {
 
 Widget FavoriteTile(context, Country country) {
   return Container(
+    margin: EdgeInsets.only(top: 5, bottom: 5),
     width: MediaQuery.of(context).size.width,
-    height: 70,
+    height: 60,
     decoration: BoxDecoration(
         color: Color(0xff1d233b),
         borderRadius: BorderRadius.all(Radius.circular(8))),
     child: Row(
-      children: <Widget>[Text(country.nome)],
+      children: <Widget>[
+        Stack(
+          children: <Widget>[
+            Container(
+              height: 60,
+              width: MediaQuery.of(context).size.width - 40,
+              decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.all(Radius.circular(8))),
+              child: Opacity(
+                opacity: 0.35,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  child: FadeInImage.memoryNetwork(
+                    placeholder: kTransparentImage,
+                    image: country.bandeiraUrl,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 15),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(country.nome,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontFamily: 'SF-Pro-Bold',
+                        color: Colors.white,
+                      )),
+                  Text(country.capital,
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontFamily: 'SF-Pro-Bold',
+                        color: Colors.white.withAlpha(130),
+                      )),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
     ),
   );
 }
