@@ -22,6 +22,10 @@ class CountryBloc implements BlocBase {
     }
   }
 
+  void injectCountry(Country c){
+    _countryCotroller.sink.add(c);
+  }
+
   @override
   void dispose() {
     _countryCotroller.close();

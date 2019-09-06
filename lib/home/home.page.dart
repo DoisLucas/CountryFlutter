@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:countryapp/blocs/country.bloc.dart';
 import 'package:countryapp/blocs/fav.bloc.dart';
@@ -222,7 +224,7 @@ class _HomePageState extends State<HomePage> {
                                                   country.nome,
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
-                                                    fontSize: 20,
+                                                    fontSize: 18,
                                                     fontFamily: 'SF-Pro-Bold',
                                                     color: Colors.white,
                                                   ),
@@ -389,18 +391,23 @@ class _HomePageState extends State<HomePage> {
                                         snapshot.data.values.toList()[index];
 
                                     return Dismissible(
-                                      direction: DismissDirection.startToEnd,
+                                      direction: DismissDirection.endToStart,
                                       key: Key(c.nome),
                                       onDismissed: (direction) {
+
+                                        favoriteBloc.removeFav(c);
                                         Scaffold.of(context).showSnackBar(
                                             SnackBar(
                                                 duration: Duration(seconds: 2),
+
                                                 action: SnackBarAction(
                                                   label: 'Desfazer',
                                                   disabledTextColor:
                                                       Colors.white,
                                                   textColor: Colors.white,
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    favoriteBloc.addFav(c);
+                                                  },
                                                 ),
                                                 content: Text(
                                                     "${c.nome} foi removido dos favoritos")));
@@ -416,9 +423,18 @@ class _HomePageState extends State<HomePage> {
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(8))),
                                         child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.end,
                                           children: <Widget>[
+
+                                            Text("Remover",
+                                                style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontFamily: 'SF-Pro-Bold',
+                                                  color: Colors.white,
+                                                )),
+
                                             SizedBox(
-                                              width: 10,
+                                              width: 5,
                                             ),
                                             Icon(
                                               Icons.delete_forever,
@@ -426,18 +442,20 @@ class _HomePageState extends State<HomePage> {
                                               color: Colors.white,
                                             ),
                                             SizedBox(
-                                              width: 5,
+                                              width: 10,
                                             ),
-                                            Text("Remover",
-                                                style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontFamily: 'SF-Pro-Bold',
-                                                  color: Colors.white,
-                                                )),
+
                                           ],
                                         ),
                                       ),
-                                      child: FavoriteTile(context, c),
+                                      child: GestureDetector(
+                                          onTap: () {
+                                            viewController.animateToPage(0,
+                                                duration: Duration(milliseconds: 500),
+                                                curve: Curves.ease);
+                                            countryBloc.injectCountry(c);
+                                          },
+                                          child: FavoriteTile(context, c)),
                                     );
                                   }),
                             );
@@ -475,7 +493,7 @@ Widget FavoriteTile(context, Country country) {
                   color: Colors.black,
                   borderRadius: BorderRadius.all(Radius.circular(8))),
               child: Opacity(
-                opacity: 0.35,
+                opacity: 0.45,
                 child: ClipRRect(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                   child: FadeInImage.memoryNetwork(

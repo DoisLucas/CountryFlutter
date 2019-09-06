@@ -17,6 +17,7 @@ class FavoriteBloc implements BlocBase {
         _favorites = json.decode(prefs.getString("favorites")).map((k, v) {
           return MapEntry(k, Country.fromJson(v));
         }).cast<String, Country>();
+
         _favController.add(_favorites);
       }
     });
@@ -34,6 +35,18 @@ class FavoriteBloc implements BlocBase {
     SharedPreferences.getInstance().then((prefs){
       prefs.setString("favorites", json.encode(_favorites));
     });
+  }
+
+  void removeFav(Country c){
+    _favorites.remove(c.nome);
+    _favController.sink.add(_favorites);
+    _saveFav();
+  }
+
+  void addFav(Country c){
+    _favorites[c.nome] = c;
+    _favController.sink.add(_favorites);
+    _saveFav();
   }
 
   @override
