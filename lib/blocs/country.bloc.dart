@@ -22,7 +22,7 @@ class CountryBloc implements BlocBase {
     }
   }
 
-  void injectCountry(Country c){
+  void injectCountry(Country c) {
     _countryCotroller.sink.add(c);
   }
 
