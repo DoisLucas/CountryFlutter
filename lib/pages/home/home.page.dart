@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 //TODO Handle erros: no flag and wrong search
-//TODO Change themeData colors
 //TODO Splash intro
 //TODO Info app with important links
 //TODO Animations
@@ -54,14 +53,14 @@ class HomePage extends StatelessWidget {
                                   style: TextStyle(
                                       fontSize: 30,
                                       fontFamily: 'SF-Pro-Bold',
-                                      color: Colors.white),
+                                      color: Theme.of(context).textTheme.title.color),
                                 ),
                                 Text("Desbrave o mundo!",
                                     textAlign: TextAlign.start,
                                     style: TextStyle(
                                       fontSize: 15,
                                       fontFamily: 'SF-Pro-SemiBold',
-                                      color: Color(0xff909fb4),
+                                      color: Theme.of(context).textTheme.subtitle.color,
                                     )),
                               ],
                             ),
@@ -80,7 +79,7 @@ class HomePage extends StatelessWidget {
                                                   ThemeOptions.DARK.toString()
                                               ? Icons.brightness_5
                                               : Icons.brightness_2,
-                                          color: Colors.white,
+                                          color: Theme.of(context).iconTheme.color,
                                           size: 26,
                                         ),
                                       ),
@@ -98,7 +97,7 @@ class HomePage extends StatelessWidget {
                                         },
                                         child: Icon(
                                           Icons.sort,
-                                          color: Colors.white,
+                                          color: Theme.of(context).iconTheme.color,
                                           size: 26,
                                         ),
                                       ),

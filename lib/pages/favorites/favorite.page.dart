@@ -35,7 +35,7 @@ class FavoritePage extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 30,
                     fontFamily: 'SF-Pro-Bold',
-                    color: Colors.white,
+                    color: Theme.of(context).textTheme.title.color,
                   ),
                 ),
                 SizedBox(

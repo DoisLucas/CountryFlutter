@@ -4,7 +4,7 @@ const URL_BASE_API = 'https://api-postful.herokuapp.com/';
 
 //Background
 const bg_dark = 0xff111731;
-const bg_light = 0xffD7FDF0;
+const bg_light = 0xffffffff;
 
 //Text
 const txt_dark_primary = 0xff111731;
