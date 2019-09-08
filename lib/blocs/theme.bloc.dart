@@ -21,6 +21,8 @@ class ThemeBloc implements BlocBase {
         backgroundColor: Color(bg_dark),
         accentColor: Color(0xff1d233b),
         primaryColorLight:  Color(0xff2f344a),
+        textSelectionHandleColor: Colors.white,
+        textSelectionColor: Color(0xff909fb4),
         iconTheme: IconThemeData(color: Colors.white),
         textTheme: TextTheme(
             title: TextStyle(color: Colors.white),
@@ -28,6 +30,8 @@ class ThemeBloc implements BlocBase {
     ThemeData(
         backgroundColor: Color(bg_light),
         accentColor: Color(0xffC6CFD6),
+        textSelectionHandleColor: Color(0xff003031),
+        textSelectionColor: Color(0xff003031).withAlpha(120),
         primaryColorLight: Colors.black.withAlpha(20),
         iconTheme: IconThemeData(color: Color(0xff003031)),
         textTheme: TextTheme(
@@ -38,8 +42,11 @@ class ThemeBloc implements BlocBase {
   toogleTheme() {
     if (themeActive == ThemeOptions.DARK.toString()) {
       setTheme(ThemeOptions.LIGHT);
+      themeActive = ThemeOptions.LIGHT.toString();
     } else if (themeActive == ThemeOptions.LIGHT.toString()) {
       setTheme(ThemeOptions.DARK);
+      themeActive = ThemeOptions.DARK.toString();
+
     }
   }
 

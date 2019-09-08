@@ -5,6 +5,7 @@ import 'package:countryapp/blocs/navigation.bloc.dart';
 import 'package:countryapp/pages/home/home.page.dart';
 import 'package:countryapp/shared/repositories/general.api.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'blocs/theme.bloc.dart';
 
 void main() => runApp(MyApp());
@@ -36,6 +37,14 @@ class App extends StatelessWidget {
         stream: themeBloc.theme,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            if (themeBloc.themeActive == ThemeOptions.DARK.toString()) {
+              SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+                  statusBarIconBrightness: Brightness.light));
+            } else {
+              SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+                  statusBarIconBrightness: Brightness.dark));
+            }
+
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               home: HomePage(),

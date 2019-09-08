@@ -14,8 +14,7 @@ import 'package:transparent_image/transparent_image.dart';
 //TODO Handle erros: no flag and wrong search
 //TODO Splash intro
 //TODO Info app with important links
-//TODO Animations
-//TODO Flare no favorites
+//TODO Flare no favorites fix
 
 class HomePage extends StatelessWidget {
   @override

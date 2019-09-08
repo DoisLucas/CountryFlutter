@@ -38,6 +38,14 @@ class FavoritePage extends StatelessWidget {
                     color: Theme.of(context).textTheme.title.color,
                   ),
                 ),
+                Text(
+                  "Deslize para o lado esquerdo para remover",
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontFamily: 'SF-Pro-Bold',
+                    color: Theme.of(context).textTheme.subtitle.color,
+                  ),
+                ),
                 SizedBox(
                   height: 15,
                 ),
@@ -45,7 +53,7 @@ class FavoritePage extends StatelessWidget {
                     initialData: {},
                     stream: favoriteBloc.outFav,
                     builder: (context, snapshot) {
-                      if (snapshot.hasData) {
+                      if (snapshot.hasData && snapshot.data.length > 0) {
                         return Expanded(
                           child: ListView.builder(
                               itemCount: snapshot.data.length,
@@ -72,7 +80,7 @@ class FavoritePage extends StatelessWidget {
                                             "${c.nome} foi removido dos favoritos")));
                                   },
                                   background: Container(
-                                    margin: EdgeInsets.only(top: 5, bottom: 5),
+                                    margin: EdgeInsets.only(bottom: 10),
                                     padding: EdgeInsets.only(right: 5),
                                     width: MediaQuery.of(context).size.width,
                                     decoration: BoxDecoration(
@@ -102,22 +110,59 @@ class FavoritePage extends StatelessWidget {
                                       ],
                                     ),
                                   ),
-                                  child: GestureDetector(
-                                      onTap: () {
-                                        navigationBloc
-                                            .getPageController()
-                                            .animateToPage(0,
-                                                duration:
-                                                    Duration(milliseconds: 500),
-                                                curve: Curves.ease);
-                                        countryBloc.injectCountry(c);
-                                      },
-                                      child: FavoriteTile(country: c)),
+                                  child: Column(
+                                    children: <Widget>[
+                                      GestureDetector(
+                                          onTap: () {
+                                            navigationBloc
+                                                .getPageController()
+                                                .animateToPage(0,
+                                                    duration:
+                                                        Duration(milliseconds: 500),
+                                                    curve: Curves.ease);
+                                            countryBloc.injectCountry(c);
+                                          },
+                                          child: FavoriteTile(country: c)
+                                      ),
+
+
+                                      index == snapshot.data.length -1  ? SizedBox(
+                                        height: 20,
+                                ) : Container(),
+
+                                    ],
+                                  ),
                                 );
                               }),
                         );
                       } else {
-                        return Container();
+                        return Expanded(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(
+                                  Icons.favorite_border,
+                                  size: 130,
+                                  color:  Theme.of(context).textTheme.subtitle.color.withAlpha(65),
+                                ),
+                                Container(
+                                  width: 200,
+                                  child: Text(
+                                    "Você não possui nenhum pais favorito.",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontFamily: 'SF-Pro-Bold',
+                                      color:  Theme.of(context).textTheme.subtitle.color.withAlpha(65),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );;
                       }
                     }),
               ],
