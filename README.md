@@ -1,16 +1,41 @@
-# countryapp
 
-A new Flutter project.
+## CountryApp
 
-## Getting Started
+### About:
 
-This project is a starting point for a Flutter application.
+Application that will consume [RestPOST-API](https://github.com/DoisLucas/RestPOST-API) where you can view all existing countries and their main information such as:
 
-A few resources to get you started if this is your first Flutter project:
+Anthem, 
+Motto, 
+Flag, 
+Population, 
+Area, 
+Borders, 
+Currency, 
+Languages and more
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Screenshots:
+
+
+
+
+
+
+### Packages used:
+
+#### [Dio:](https://pub.dev/packages/dio)
+> A powerful Http client for Dart, which supports Interceptors, Global configuration, FormData, Request Cancellation, File downloading, Timeout etc.
+
+#### [RxDart:](https://pub.dev/packages/rxdart) 
+> RxDart is a reactive functional programming library for Google Dart, based on ReactiveX. 
+
+#### [Bloc Pattern:](https://pub.dev/packages/bloc_pattern)
+> Tools to implement BLoC Pattern with Dependency Injection in your project.
+
+#### [Shared Preferences:](https://pub.dev/packages/shared_preferences)
+> Wraps NSUserDefaults (on iOS) and SharedPreferences (on Android), providing a persistent store for simple data. Data is persisted to disk asynchronously.
+
+#### [Flare Flutter:](https://pub.dev/packages/flare_splash_screen)
+> Vector design and runtime animation for Flutter.
+
