@@ -17,8 +17,12 @@ class ThemeBloc implements BlocBase {
   Stream<ThemeData> get theme => _themeController.stream;
 
   List<ThemeData> _availableThemes = [
-    ThemeData(backgroundColor: Color(bg_dark)),
-    ThemeData(backgroundColor: Color(bg_light)),
+    ThemeData(
+        backgroundColor: Color(bg_dark),
+        textTheme: TextTheme(title: TextStyle(color: Colors.white))),
+    ThemeData(
+        backgroundColor: Color(bg_light),
+        textTheme: TextTheme(title: TextStyle(color: Colors.black))),
   ];
 
   toogleTheme() {

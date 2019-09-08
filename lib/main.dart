@@ -5,7 +5,6 @@ import 'package:countryapp/blocs/navigation.bloc.dart';
 import 'package:countryapp/pages/home/home.page.dart';
 import 'package:countryapp/shared/repositories/general.api.dart';
 import 'package:flutter/material.dart';
-
 import 'blocs/theme.bloc.dart';
 
 void main() => runApp(MyApp());
@@ -14,10 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: HomePage(),
-      ),
+      child: App(),
       dependencies: [
         Dependency((i) => GeneralApi()),
       ],
@@ -28,5 +24,26 @@ class MyApp extends StatelessWidget {
         Bloc((i) => ThemeBloc()),
       ],
     );
+  }
+}
+
+class App extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final themeBloc = BlocProvider.getBloc<ThemeBloc>();
+
+    return StreamBuilder<ThemeData>(
+        stream: themeBloc.theme,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              home: HomePage(),
+              theme: snapshot.data,
+            );
+          } else {
+            return Container();
+          }
+        });
   }
 }
