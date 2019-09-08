@@ -6,6 +6,8 @@ import 'package:countryapp/pages/home/home.page.dart';
 import 'package:countryapp/shared/repositories/general.api.dart';
 import 'package:flutter/material.dart';
 
+import 'blocs/theme.bloc.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -22,7 +24,8 @@ class MyApp extends StatelessWidget {
       blocs: [
         Bloc((i) => CountryBloc(i.get<GeneralApi>())),
         Bloc((i) => FavoriteBloc()),
-        Bloc((i) => NavigationBloc())
+        Bloc((i) => NavigationBloc()),
+        Bloc((i) => ThemeBloc()),
       ],
     );
   }
