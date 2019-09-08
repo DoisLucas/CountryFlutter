@@ -15,18 +15,18 @@ class Country {
 
   Country(
       {this.id,
-        this.nome,
-        this.capital,
-        this.area,
-        this.populacao,
-        this.governo,
-        this.lema,
-        this.hino,
-        this.linguas,
-        this.moeda,
-        this.vizinhos,
-        this.fMaritimas,
-        this.bandeiraUrl});
+      this.nome,
+      this.capital,
+      this.area,
+      this.populacao,
+      this.governo,
+      this.lema,
+      this.hino,
+      this.linguas,
+      this.moeda,
+      this.vizinhos,
+      this.fMaritimas,
+      this.bandeiraUrl});
 
   Country.fromJson(Map<String, dynamic> json) {
     id = json['id'];

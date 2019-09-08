@@ -20,7 +20,7 @@ class ThemeBloc implements BlocBase {
     ThemeData(
         backgroundColor: Color(bg_dark),
         accentColor: Color(0xff1d233b),
-        primaryColorLight:  Color(0xff2f344a),
+        primaryColorLight: Color(0xff2f344a),
         textSelectionHandleColor: Colors.white,
         textSelectionColor: Color(0xff909fb4),
         iconTheme: IconThemeData(color: Colors.white),
@@ -46,7 +46,6 @@ class ThemeBloc implements BlocBase {
     } else if (themeActive == ThemeOptions.LIGHT.toString()) {
       setTheme(ThemeOptions.DARK);
       themeActive = ThemeOptions.DARK.toString();
-
     }
   }
 

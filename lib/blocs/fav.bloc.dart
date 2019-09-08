@@ -10,7 +10,7 @@ class FavoriteBloc implements BlocBase {
 
   final _favController = BehaviorSubject<Map<String, Country>>.seeded({});
   Stream<Map<String, Country>> get outFav => _favController.stream;
-  
+
   FavoriteBloc() {
     SharedPreferences.getInstance().then((prefs) {
       if (prefs.getKeys().contains("favorites")) {
@@ -23,27 +23,29 @@ class FavoriteBloc implements BlocBase {
     });
   }
 
-  void toggleFavorite(Country country){
-    if(_favorites.containsKey(country.nome)) _favorites.remove(country.nome);
-    else _favorites[country.nome] = country;
+  void toggleFavorite(Country country) {
+    if (_favorites.containsKey(country.nome))
+      _favorites.remove(country.nome);
+    else
+      _favorites[country.nome] = country;
     _favController.sink.add(_favorites);
     print(_favorites);
     _saveFav();
   }
 
-  void _saveFav(){
-    SharedPreferences.getInstance().then((prefs){
+  void _saveFav() {
+    SharedPreferences.getInstance().then((prefs) {
       prefs.setString("favorites", json.encode(_favorites));
     });
   }
 
-  void removeFav(Country c){
+  void removeFav(Country c) {
     _favorites.remove(c.nome);
     _favController.sink.add(_favorites);
     _saveFav();
   }
 
-  void addFav(Country c){
+  void addFav(Country c) {
     _favorites[c.nome] = c;
     _favController.sink.add(_favorites);
     _saveFav();

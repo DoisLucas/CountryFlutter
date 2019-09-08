@@ -19,7 +19,6 @@ import 'package:transparent_image/transparent_image.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     final countryBloc = BlocProvider.getBloc<CountryBloc>();
     final favoriteBloc = BlocProvider.getBloc<FavoriteBloc>();
     final navigationBloc = BlocProvider.getBloc<NavigationBloc>();
@@ -52,14 +51,20 @@ class HomePage extends StatelessWidget {
                                   style: TextStyle(
                                       fontSize: 30,
                                       fontFamily: 'SF-Pro-Bold',
-                                      color: Theme.of(context).textTheme.title.color),
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .title
+                                          .color),
                                 ),
                                 Text("Desbrave o mundo!",
                                     textAlign: TextAlign.start,
                                     style: TextStyle(
                                       fontSize: 15,
                                       fontFamily: 'SF-Pro-SemiBold',
-                                      color: Theme.of(context).textTheme.subtitle.color,
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .subtitle
+                                          .color,
                                     )),
                               ],
                             ),
@@ -78,7 +83,8 @@ class HomePage extends StatelessWidget {
                                                   ThemeOptions.DARK.toString()
                                               ? Icons.brightness_5
                                               : Icons.brightness_2,
-                                          color: Theme.of(context).iconTheme.color,
+                                          color:
+                                              Theme.of(context).iconTheme.color,
                                           size: 26,
                                         ),
                                       ),
@@ -96,7 +102,8 @@ class HomePage extends StatelessWidget {
                                         },
                                         child: Icon(
                                           Icons.sort,
-                                          color: Theme.of(context).iconTheme.color,
+                                          color:
+                                              Theme.of(context).iconTheme.color,
                                           size: 26,
                                         ),
                                       ),
@@ -117,7 +124,11 @@ class HomePage extends StatelessWidget {
                               Padding(
                                 padding: EdgeInsets.only(left: 5, right: 5),
                               ),
-                              Icon(Icons.search, color:  Theme.of(context).textTheme.subtitle.color),
+                              Icon(Icons.search,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .subtitle
+                                      .color),
                               Padding(
                                 padding: EdgeInsets.only(left: 5),
                                 child: SizedBox(
@@ -128,9 +139,13 @@ class HomePage extends StatelessWidget {
                                     onSubmitted: (value) {
                                       countryBloc.searchValue.add(value);
                                     },
-                                    cursorColor: Theme.of(context).textTheme.title.color,
+                                    cursorColor:
+                                        Theme.of(context).textTheme.title.color,
                                     style: TextStyle(
-                                        color: Theme.of(context).textTheme.title.color,
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .title
+                                            .color,
                                         fontFamily: 'SF-Pro-SemiBold',
                                         fontSize: 16),
                                     decoration: InputDecoration(
@@ -168,7 +183,11 @@ class HomePage extends StatelessWidget {
                                   Icon(
                                     Icons.search,
                                     size: 130,
-                                    color:  Theme.of(context).textTheme.subtitle.color.withAlpha(65),
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .subtitle
+                                        .color
+                                        .withAlpha(65),
                                   ),
                                   Container(
                                     width: 200,
@@ -178,7 +197,11 @@ class HomePage extends StatelessWidget {
                                       style: TextStyle(
                                         fontSize: 15,
                                         fontFamily: 'SF-Pro-Bold',
-                                        color:  Theme.of(context).textTheme.subtitle.color.withAlpha(65),
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .subtitle
+                                            .color
+                                            .withAlpha(65),
                                       ),
                                     ),
                                   ),
@@ -205,7 +228,8 @@ class HomePage extends StatelessWidget {
                                           height: 70,
                                           width: 110,
                                           decoration: BoxDecoration(
-                                              color: Theme.of(context).primaryColorLight,
+                                              color: Theme.of(context)
+                                                  .primaryColorLight,
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(10))),
                                           child: ClipRRect(
@@ -227,7 +251,8 @@ class HomePage extends StatelessWidget {
                                             MediaQuery.of(context).size.width -
                                                 165,
                                         decoration: BoxDecoration(
-                                            color: Theme.of(context).primaryColorLight,
+                                            color: Theme.of(context)
+                                                .primaryColorLight,
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10))),
                                         child: Row(
@@ -244,7 +269,10 @@ class HomePage extends StatelessWidget {
                                                   style: TextStyle(
                                                     fontSize: 18,
                                                     fontFamily: 'SF-Pro-Bold',
-                                                    color: Theme.of(context).textTheme.title.color,
+                                                    color: Theme.of(context)
+                                                        .textTheme
+                                                        .title
+                                                        .color,
                                                   ),
                                                 ),
                                                 Text(
@@ -253,7 +281,10 @@ class HomePage extends StatelessWidget {
                                                   style: TextStyle(
                                                     fontSize: 12,
                                                     fontFamily: 'SF-Pro-Bold',
-                                                    color: Theme.of(context).textTheme.subtitle.color,
+                                                    color: Theme.of(context)
+                                                        .textTheme
+                                                        .subtitle
+                                                        .color,
                                                   ),
                                                 ),
                                               ],
@@ -281,14 +312,21 @@ class HomePage extends StatelessWidget {
                                                           return Container(
                                                             width: 40,
                                                             height: 40,
-                                                            child: snapshot.data
-                                                                    .containsKey(
-                                                                        country
-                                                                            .nome)
-                                                                ? like_animation(
-                                                                    "like", themeBloc.themeActive)
-                                                                : like_animation(
-                                                                    "deslike", themeBloc.themeActive),
+                                                            child: Icon(
+                                                              snapshot.data.containsKey(
+                                                                      country
+                                                                          .nome)
+                                                                  ? Icons
+                                                                      .favorite
+                                                                  : Icons
+                                                                      .favorite_border,
+                                                              size: 37,
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .title
+                                                                  .color,
+                                                            ),
                                                           );
                                                         } else {
                                                           return Container();
@@ -311,7 +349,8 @@ class HomePage extends StatelessWidget {
                                   child: Container(
                                     width: MediaQuery.of(context).size.width,
                                     decoration: BoxDecoration(
-                                      color: Theme.of(context).primaryColorLight,
+                                      color:
+                                          Theme.of(context).primaryColorLight,
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(10)),
                                     ),
@@ -364,7 +403,10 @@ class HomePage extends StatelessWidget {
                                               style: TextStyle(
                                                 fontSize: 12,
                                                 fontFamily: 'SF-Pro-Bold',
-                                                color: Theme.of(context).textTheme.subtitle.color,
+                                                color: Theme.of(context)
+                                                    .textTheme
+                                                    .subtitle
+                                                    .color,
                                               ),
                                             ),
                                           )),
@@ -394,13 +436,10 @@ class HomePage extends StatelessWidget {
   }
 
   Widget like_animation(animation, themeActive) {
-    if(themeActive == ThemeOptions.LIGHT.toString()){
+    if (themeActive == ThemeOptions.LIGHT.toString()) {
       return FlareActor('assets/like_dark.flr', animation: animation);
-    }else if (themeActive == ThemeOptions.DARK.toString()){
+    } else if (themeActive == ThemeOptions.DARK.toString()) {
       return FlareActor('assets/like.flr', animation: animation);
     }
   }
-
 }
-
-

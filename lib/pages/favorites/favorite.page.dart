@@ -7,14 +7,13 @@ import 'package:countryapp/shared/models/country.dart';
 import 'package:flutter/material.dart';
 
 class FavoritePage extends StatelessWidget {
-
   final countryBloc = BlocProvider.getBloc<CountryBloc>();
   final favoriteBloc = BlocProvider.getBloc<FavoriteBloc>();
   final navigationBloc = BlocProvider.getBloc<NavigationBloc>();
 
   Future<bool> _willPopCallback() async {
-    await navigationBloc.getPageController().animateToPage(0, duration: Duration(milliseconds:
-    500), curve: Curves.ease);
+    await navigationBloc.getPageController().animateToPage(0,
+        duration: Duration(milliseconds: 500), curve: Curves.ease);
     return false;
   }
 
@@ -59,7 +58,8 @@ class FavoritePage extends StatelessWidget {
                               itemCount: snapshot.data.length,
                               physics: BouncingScrollPhysics(),
                               itemBuilder: (context, index) {
-                                Country c = snapshot.data.values.toList()[index];
+                                Country c =
+                                    snapshot.data.values.toList()[index];
 
                                 return Dismissible(
                                   direction: DismissDirection.endToStart,
@@ -80,13 +80,13 @@ class FavoritePage extends StatelessWidget {
                                             "${c.nome} foi removido dos favoritos")));
                                   },
                                   background: Container(
-                                    margin: EdgeInsets.only(bottom: 10),
+                                    margin: EdgeInsets.only(top: 5, bottom: 5),
                                     padding: EdgeInsets.only(right: 5),
                                     width: MediaQuery.of(context).size.width,
                                     decoration: BoxDecoration(
                                         color: Theme.of(context).accentColor,
-                                        borderRadius:
-                                            BorderRadius.all(Radius.circular(8))),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(8))),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: <Widget>[
@@ -94,7 +94,10 @@ class FavoritePage extends StatelessWidget {
                                             style: TextStyle(
                                               fontSize: 15,
                                               fontFamily: 'SF-Pro-Bold',
-                                              color: Theme.of(context).textTheme.title.color,
+                                              color: Theme.of(context)
+                                                  .textTheme
+                                                  .title
+                                                  .color,
                                             )),
                                         SizedBox(
                                           width: 5,
@@ -102,7 +105,10 @@ class FavoritePage extends StatelessWidget {
                                         Icon(
                                           Icons.delete_forever,
                                           size: 20,
-                                          color: Theme.of(context).textTheme.title.color,
+                                          color: Theme.of(context)
+                                              .textTheme
+                                              .title
+                                              .color,
                                         ),
                                         SizedBox(
                                           width: 10,
@@ -117,19 +123,12 @@ class FavoritePage extends StatelessWidget {
                                             navigationBloc
                                                 .getPageController()
                                                 .animateToPage(0,
-                                                    duration:
-                                                        Duration(milliseconds: 500),
+                                                    duration: Duration(
+                                                        milliseconds: 500),
                                                     curve: Curves.ease);
                                             countryBloc.injectCountry(c);
                                           },
-                                          child: FavoriteTile(country: c)
-                                      ),
-
-
-                                      index == snapshot.data.length -1  ? SizedBox(
-                                        height: 20,
-                                ) : Container(),
-
+                                          child: FavoriteTile(country: c)),
                                     ],
                                   ),
                                 );
@@ -145,7 +144,11 @@ class FavoritePage extends StatelessWidget {
                                 Icon(
                                   Icons.favorite_border,
                                   size: 130,
-                                  color:  Theme.of(context).textTheme.subtitle.color.withAlpha(65),
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .subtitle
+                                      .color
+                                      .withAlpha(65),
                                 ),
                                 Container(
                                   width: 200,
@@ -155,14 +158,19 @@ class FavoritePage extends StatelessWidget {
                                     style: TextStyle(
                                       fontSize: 15,
                                       fontFamily: 'SF-Pro-Bold',
-                                      color:  Theme.of(context).textTheme.subtitle.color.withAlpha(65),
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .subtitle
+                                          .color
+                                          .withAlpha(65),
                                     ),
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                        );;
+                        );
+                        ;
                       }
                     }),
               ],
