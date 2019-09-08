@@ -76,7 +76,7 @@ class FavoritePage extends StatelessWidget {
                                     padding: EdgeInsets.only(right: 5),
                                     width: MediaQuery.of(context).size.width,
                                     decoration: BoxDecoration(
-                                        color: Colors.white.withAlpha(20),
+                                        color: Theme.of(context).accentColor,
                                         borderRadius:
                                             BorderRadius.all(Radius.circular(8))),
                                     child: Row(
@@ -86,7 +86,7 @@ class FavoritePage extends StatelessWidget {
                                             style: TextStyle(
                                               fontSize: 15,
                                               fontFamily: 'SF-Pro-Bold',
-                                              color: Colors.white,
+                                              color: Theme.of(context).textTheme.title.color,
                                             )),
                                         SizedBox(
                                           width: 5,
@@ -94,7 +94,7 @@ class FavoritePage extends StatelessWidget {
                                         Icon(
                                           Icons.delete_forever,
                                           size: 20,
-                                          color: Colors.white,
+                                          color: Theme.of(context).textTheme.title.color,
                                         ),
                                         SizedBox(
                                           width: 10,

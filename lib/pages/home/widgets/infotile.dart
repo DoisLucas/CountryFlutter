@@ -18,8 +18,8 @@ class InfoTile extends StatelessWidget {
             color: Color(0xff909fb4),
           ),
           children: <TextSpan>[
-            TextSpan(text: title, style: TextStyle(color: Colors.white)),
-            TextSpan(text: "$value", style: TextStyle(fontSize: 15))
+            TextSpan(text: title, style: TextStyle(color: Theme.of(context).textTheme.title.color)),
+            TextSpan(text: "$value", style: TextStyle(fontSize: 15, color: Theme.of(context).textTheme.subtitle.color))
           ],
         ),
       ),

@@ -19,16 +19,20 @@ class ThemeBloc implements BlocBase {
   List<ThemeData> _availableThemes = [
     ThemeData(
         backgroundColor: Color(bg_dark),
+        accentColor: Color(0xff1d233b),
+        primaryColorLight:  Color(0xff2f344a),
         iconTheme: IconThemeData(color: Colors.white),
         textTheme: TextTheme(
             title: TextStyle(color: Colors.white),
             subtitle: TextStyle(color: Color(0xff909fb4)))),
     ThemeData(
         backgroundColor: Color(bg_light),
-        iconTheme: IconThemeData(color: Colors.black),
+        accentColor: Color(0xffC6CFD6),
+        primaryColorLight: Colors.black.withAlpha(20),
+        iconTheme: IconThemeData(color: Color(0xff003031)),
         textTheme: TextTheme(
-            title: TextStyle(color: Colors.black),
-            subtitle: TextStyle(color: Colors.black.withAlpha(100)))),
+            title: TextStyle(color: Color(0xff003031)),
+            subtitle: TextStyle(color: Color(0xff003031).withAlpha(120)))),
   ];
 
   toogleTheme() {
