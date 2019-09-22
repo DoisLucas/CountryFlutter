@@ -14,8 +14,11 @@ class FavoriteTile extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: 60,
       decoration: BoxDecoration(
-          color: Color(0xff1d233b),
-          borderRadius: BorderRadius.all(Radius.circular(8))),
+        color: Color(0xff1d233b),
+        borderRadius: BorderRadius.all(
+          Radius.circular(8),
+        ),
+      ),
       child: Row(
         children: <Widget>[
           Stack(
@@ -24,12 +27,17 @@ class FavoriteTile extends StatelessWidget {
                 height: 60,
                 width: MediaQuery.of(context).size.width - 40,
                 decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.all(Radius.circular(8))),
+                  color: Colors.black,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(8),
+                  ),
+                ),
                 child: Opacity(
                   opacity: 0.45,
                   child: ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(8),
+                    ),
                     child: FadeInImage.memoryNetwork(
                       placeholder: kTransparentImage,
                       image: country.bandeiraUrl,
@@ -44,18 +52,22 @@ class FavoriteTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(country.nome,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'SF-Pro-Bold',
-                          color: Colors.white,
-                        )),
-                    Text(country.capital,
-                        style: TextStyle(
-                          fontSize: 11,
-                          fontFamily: 'SF-Pro-Bold',
-                          color: Colors.white.withAlpha(130),
-                        )),
+                    Text(
+                      country.nome,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontFamily: 'SF-Pro-Bold',
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      country.capital,
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontFamily: 'SF-Pro-Bold',
+                        color: Colors.white.withAlpha(130),
+                      ),
+                    ),
                   ],
                 ),
               ),

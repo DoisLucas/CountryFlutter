@@ -6,15 +6,9 @@ import 'package:countryapp/blocs/theme.bloc.dart';
 import 'package:countryapp/pages/favorites/favorite.page.dart';
 import 'package:countryapp/pages/home/widgets/infotile.dart';
 import 'package:countryapp/shared/models/country.dart';
-import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
-
-//TODO Handle erros: no flag and wrong search
-//TODO Splash intro
-//TODO Info app with important links
-//TODO Flare no favorites fix
 
 class HomePage extends StatelessWidget {
   @override
@@ -23,6 +17,106 @@ class HomePage extends StatelessWidget {
     final favoriteBloc = BlocProvider.getBloc<FavoriteBloc>();
     final navigationBloc = BlocProvider.getBloc<NavigationBloc>();
     final themeBloc = BlocProvider.getBloc<ThemeBloc>();
+
+    Widget topBar() {
+      return Row(
+        children: <Widget>[
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "Olá, viajante.",
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                    fontSize: 30,
+                    fontFamily: 'SF-Pro-Bold',
+                    color: Theme.of(context).textTheme.title.color),
+              ),
+              Text("Desbrave o mundo!",
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontFamily: 'SF-Pro-SemiBold',
+                    color: Theme.of(context).textTheme.subtitle.color,
+                  )),
+            ],
+          ),
+          Expanded(
+            child: Align(
+                alignment: Alignment.centerRight,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    GestureDetector(
+                      onTap: () {
+                        themeBloc.toogleTheme();
+                      },
+                      child: Icon(
+                        themeBloc.themeActive == ThemeOptions.DARK.toString()
+                            ? Icons.brightness_5
+                            : Icons.brightness_2,
+                        color: Theme.of(context).iconTheme.color,
+                        size: 26,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        navigationBloc.getPageController().animateToPage(1,
+                            duration: Duration(milliseconds: 500),
+                            curve: Curves.ease);
+                      },
+                      child: Icon(
+                        Icons.sort,
+                        color: Theme.of(context).iconTheme.color,
+                        size: 26,
+                      ),
+                    ),
+                  ],
+                )),
+          ),
+        ],
+      );
+    }
+
+    Widget searchBar() {
+      return Container(
+        margin: EdgeInsets.only(top: 10),
+        height: 45,
+        decoration: BoxDecoration(
+            color: Theme.of(context).accentColor,
+            borderRadius: BorderRadius.all(Radius.circular(5))),
+        child: Row(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(left: 5, right: 5),
+            ),
+            Icon(Icons.search,
+                color: Theme.of(context).textTheme.subtitle.color),
+            Padding(
+              padding: EdgeInsets.only(left: 5),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width / 1.3,
+                child: TextField(
+                  textInputAction: TextInputAction.go,
+                  onSubmitted: (value) {
+                    countryBloc.searchValue.add(value);
+                  },
+                  cursorColor: Theme.of(context).textTheme.title.color,
+                  style: TextStyle(
+                      color: Theme.of(context).textTheme.title.color,
+                      fontFamily: 'SF-Pro-SemiBold',
+                      fontSize: 16),
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ),
+            )
+          ],
+        ),
+      );
+    }
 
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
@@ -40,122 +134,8 @@ class HomePage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  "Olá, viajante.",
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(
-                                      fontSize: 30,
-                                      fontFamily: 'SF-Pro-Bold',
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .title
-                                          .color),
-                                ),
-                                Text("Desbrave o mundo!",
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontFamily: 'SF-Pro-SemiBold',
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .subtitle
-                                          .color,
-                                    )),
-                              ],
-                            ),
-                            Expanded(
-                              child: Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: <Widget>[
-                                      GestureDetector(
-                                        onTap: () {
-                                          themeBloc.toogleTheme();
-                                        },
-                                        child: Icon(
-                                          themeBloc.themeActive ==
-                                                  ThemeOptions.DARK.toString()
-                                              ? Icons.brightness_5
-                                              : Icons.brightness_2,
-                                          color:
-                                              Theme.of(context).iconTheme.color,
-                                          size: 26,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          navigationBloc
-                                              .getPageController()
-                                              .animateToPage(1,
-                                                  duration: Duration(
-                                                      milliseconds: 500),
-                                                  curve: Curves.ease);
-                                        },
-                                        child: Icon(
-                                          Icons.sort,
-                                          color:
-                                              Theme.of(context).iconTheme.color,
-                                          size: 26,
-                                        ),
-                                      ),
-                                    ],
-                                  )),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 10),
-                          height: 45,
-                          decoration: BoxDecoration(
-                              color: Theme.of(context).accentColor,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5))),
-                          child: Row(
-                            children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.only(left: 5, right: 5),
-                              ),
-                              Icon(Icons.search,
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .subtitle
-                                      .color),
-                              Padding(
-                                padding: EdgeInsets.only(left: 5),
-                                child: SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width / 1.3,
-                                  child: TextField(
-                                    textInputAction: TextInputAction.go,
-                                    onSubmitted: (value) {
-                                      countryBloc.searchValue.add(value);
-                                    },
-                                    cursorColor:
-                                        Theme.of(context).textTheme.title.color,
-                                    style: TextStyle(
-                                        color: Theme.of(context)
-                                            .textTheme
-                                            .title
-                                            .color,
-                                        fontFamily: 'SF-Pro-SemiBold',
-                                        fontSize: 16),
-                                    decoration: InputDecoration(
-                                        border: InputBorder.none),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        )
+                        topBar(),
+                        searchBar(),
                       ],
                     ),
                   ),
@@ -167,10 +147,12 @@ class HomePage extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
                     decoration: BoxDecoration(
-                        color: Theme.of(context).accentColor,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20))),
+                      color: Theme.of(context).accentColor,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      ),
+                    ),
                     child: StreamBuilder<Country>(
                       stream: countryBloc.countryChoose,
                       builder: (context, snapshot) {
@@ -228,13 +210,16 @@ class HomePage extends StatelessWidget {
                                           height: 70,
                                           width: 110,
                                           decoration: BoxDecoration(
-                                              color: Theme.of(context)
-                                                  .primaryColorLight,
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10))),
+                                            color: Theme.of(context)
+                                                .primaryColorLight,
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(10),
+                                            ),
+                                          ),
                                           child: ClipRRect(
                                             borderRadius: BorderRadius.all(
-                                                Radius.circular(10)),
+                                              Radius.circular(10),
+                                            ),
                                             child: FadeInImage.memoryNetwork(
                                               placeholder: kTransparentImage,
                                               image: country.bandeiraUrl,
@@ -251,10 +236,12 @@ class HomePage extends StatelessWidget {
                                             MediaQuery.of(context).size.width -
                                                 165,
                                         decoration: BoxDecoration(
-                                            color: Theme.of(context)
-                                                .primaryColorLight,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
+                                          color: Theme.of(context)
+                                              .primaryColorLight,
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(10),
+                                          ),
+                                        ),
                                         child: Row(
                                           children: <Widget>[
                                             Column(
@@ -351,8 +338,9 @@ class HomePage extends StatelessWidget {
                                     decoration: BoxDecoration(
                                       color:
                                           Theme.of(context).primaryColorLight,
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(10)),
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(10),
+                                      ),
                                     ),
                                     child: Padding(
                                       padding: EdgeInsets.only(
@@ -397,19 +385,20 @@ class HomePage extends StatelessWidget {
                                             height: 20,
                                           ),
                                           Center(
-                                              child: Container(
-                                            child: Text(
-                                              "Powered by SimplePiece",
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                fontFamily: 'SF-Pro-Bold',
-                                                color: Theme.of(context)
-                                                    .textTheme
-                                                    .subtitle
-                                                    .color,
+                                            child: Container(
+                                              child: Text(
+                                                "Powered by SimplePiece",
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontFamily: 'SF-Pro-Bold',
+                                                  color: Theme.of(context)
+                                                      .textTheme
+                                                      .subtitle
+                                                      .color,
+                                                ),
                                               ),
                                             ),
-                                          )),
+                                          ),
                                           SizedBox(
                                             height: 5,
                                           ),
@@ -433,13 +422,5 @@ class HomePage extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  Widget like_animation(animation, themeActive) {
-    if (themeActive == ThemeOptions.LIGHT.toString()) {
-      return FlareActor('assets/like_dark.flr', animation: animation);
-    } else if (themeActive == ThemeOptions.DARK.toString()) {
-      return FlareActor('assets/like.flr', animation: animation);
-    }
   }
 }

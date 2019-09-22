@@ -1,5 +1,4 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
-import 'package:countryapp/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,35 +8,14 @@ enum ThemeOptions { LIGHT, DARK }
 class ThemeBloc implements BlocBase {
   String themeActive;
 
-  ThemeBloc() {
-    getTheme().then((f) => setTheme(f));
-  }
+  List<ThemeData> _availableThemes = [themeDark, themeLight];
 
   BehaviorSubject<ThemeData> _themeController = BehaviorSubject();
   Stream<ThemeData> get theme => _themeController.stream;
 
-  List<ThemeData> _availableThemes = [
-    ThemeData(
-        backgroundColor: Color(bg_dark),
-        accentColor: Color(0xff1d233b),
-        primaryColorLight: Color(0xff2f344a),
-        textSelectionHandleColor: Colors.white,
-        textSelectionColor: Color(0xff909fb4),
-        iconTheme: IconThemeData(color: Colors.white),
-        textTheme: TextTheme(
-            title: TextStyle(color: Colors.white),
-            subtitle: TextStyle(color: Color(0xff909fb4)))),
-    ThemeData(
-        backgroundColor: Color(bg_light),
-        accentColor: Color(0xffC6CFD6),
-        textSelectionHandleColor: Color(0xff003031),
-        textSelectionColor: Color(0xff003031).withAlpha(120),
-        primaryColorLight: Colors.black.withAlpha(20),
-        iconTheme: IconThemeData(color: Color(0xff003031)),
-        textTheme: TextTheme(
-            title: TextStyle(color: Color(0xff003031)),
-            subtitle: TextStyle(color: Color(0xff003031).withAlpha(120)))),
-  ];
+  ThemeBloc() {
+    getTheme().then((f) => setTheme(f));
+  }
 
   toogleTheme() {
     if (themeActive == ThemeOptions.DARK.toString()) {
@@ -53,12 +31,16 @@ class ThemeBloc implements BlocBase {
     switch (option) {
       case ThemeOptions.DARK:
         _themeController.add(_availableThemes[0]);
-        _saveState(option.toString());
+        _saveState(
+          option.toString(),
+        );
         themeActive = option.toString();
         break;
       case ThemeOptions.LIGHT:
         _themeController.add(_availableThemes[1]);
-        _saveState(option.toString());
+        _saveState(
+          option.toString(),
+        );
         themeActive = option.toString();
         break;
     }
@@ -89,6 +71,42 @@ class ThemeBloc implements BlocBase {
       prefs.setString("themeSelected", value);
     });
   }
+
+  static ThemeData themeDark = ThemeData(
+    backgroundColor: Color(0xff111731),
+    accentColor: Color(0xff1d233b),
+    primaryColorLight: Color(0xff2f344a),
+    textSelectionHandleColor: Colors.white,
+    textSelectionColor: Color(0xff909fb4),
+    iconTheme: IconThemeData(color: Colors.white),
+    textTheme: TextTheme(
+      title: TextStyle(color: Colors.white),
+      subtitle: TextStyle(
+        color: Color(0xff909fb4),
+      ),
+    ),
+  );
+
+  static ThemeData themeLight = ThemeData(
+    backgroundColor: Color(0xffffffff),
+    accentColor: Color(0xffC6CFD6),
+    textSelectionHandleColor: Color(0xff003031),
+    textSelectionColor: Color(0xff003031).withAlpha(120),
+    primaryColorLight: Colors.black.withAlpha(20),
+    iconTheme: IconThemeData(
+      color: Color(
+        0xff003031,
+      ),
+    ),
+    textTheme: TextTheme(
+      title: TextStyle(
+        color: Color(0xff003031),
+      ),
+      subtitle: TextStyle(
+        color: Color(0xff003031).withAlpha(120),
+      ),
+    ),
+  );
 
   @override
   void dispose() {
